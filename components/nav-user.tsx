@@ -7,6 +7,7 @@ import {
   CircleUser,
   CreditCard,
   LogOut,
+  Moon,
   Sparkles,
 } from "lucide-react"
 
@@ -31,6 +32,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { Button } from "./ui/button"
+import DarkModeToggle from "./dark-mode"
 
 export function NavUser({
   user,
@@ -90,6 +92,7 @@ export function NavUser({
                     <BadgeCheck className="h-4 w-4" color="black" />
                     <span className="text-sm text-black">Account</span>
                   </Button>
+                  <DarkModeToggle />
                 </div>
               </div>
             </div>
