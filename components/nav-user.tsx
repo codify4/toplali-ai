@@ -4,7 +4,6 @@ import {
   BadgeCheck,
   Bell,
   ChevronRight,
-  ChevronsUpDown,
   CircleUser,
   CreditCard,
   LogOut,
@@ -17,20 +16,21 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "@/components/ui/dialog"
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { Button } from "./ui/button"
 
 export function NavUser({
   user,
@@ -46,8 +46,8 @@ export function NavUser({
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+        <Dialog>
+          <DialogTrigger asChild>
             <SidebarMenuButton
               className="bg-primary py-3 hover:text-muted cursor-pointer"
             >
@@ -63,56 +63,44 @@ export function NavUser({
               </div>
               <ChevronRight className="ml-auto size-4" />
             </SidebarMenuButton>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg bg-primary border"
-            side={isMobile ? "bottom" : "right"}
-            align="end"
-            sideOffset={4}
-          >
-            <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-lg bg-primary rounded-2xl">
+            <DialogHeader className="space-y-3">
+              <div className="flex items-center justify-between">
+                <DialogTitle>User Profile</DialogTitle>
+              </div>
+              <div className="flex items-center gap-3">
+                <Avatar className="h-12 w-12 rounded-lg">
                   <AvatarImage src={user.avatar} alt={user.name} />
                   <AvatarFallback className="rounded-lg bg-transparent">
-                    <CircleUser />
+                    <CircleUser className="h-8 w-8" />
                   </AvatarFallback>
                 </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                <div>
+                  <h3 className="font-medium">{user.name}</h3>
+                  <p className="text-sm text-muted-foreground">{user.email}</p>
                 </div>
               </div>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:bg-primary/90">
-              <LogOut />
-              Log out
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <h4 className="text-sm font-medium">Account Settings</h4>
+                <div className="space-y-2">
+                  <Button className="flex w-full items-center justify-start gap-3 rounded-lg px-2 py-5 border hover:bg-muted/10"> 
+                    <BadgeCheck className="h-4 w-4" color="black" />
+                    <span className="text-sm text-black">Account</span>
+                  </Button>
+                </div>
+              </div>
+            </div>
+            <div className="pt-4">
+              <Button className="flex w-full items-center gap-3 rounded-lg px-2 py-5 text-sm text-destructive hover:bg-destructive/10">
+                <LogOut className="h-4 w-4" />
+                <span>Log out</span>
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </SidebarMenuItem>
     </SidebarMenu>
   )
