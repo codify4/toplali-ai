@@ -89,8 +89,8 @@ export function NavUser({
                 <h4 className="text-sm font-medium">Account Settings</h4>
                 <div className="space-y-2">
                   <Button className="flex w-full items-center justify-start gap-3 rounded-lg px-2 py-5 border hover:bg-muted/10"> 
-                    <BadgeCheck className="h-4 w-4" color="black" />
-                    <span className="text-sm text-black">Account</span>
+                    <BadgeCheck className="h-4 w-4 text-black dark:text-white" />
+                    <span className="text-sm text-black dark:text-white">Account</span>
                   </Button>
                   <DarkModeToggle />
                 </div>
