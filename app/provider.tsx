@@ -1,7 +1,9 @@
+'use client'
+
 import { SidebarProvider } from '@/components/ui/sidebar'
 import React from 'react'
 
-function provider({children}: {children: React.ReactNode}) {
+function Provider({children}: {children: React.ReactNode}) {
     return (
         <SidebarProvider>
             {children}
@@ -9,4 +11,4 @@ function provider({children}: {children: React.ReactNode}) {
     )
 }
 
-export default provider
+export default Provider
