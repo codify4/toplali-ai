@@ -1,80 +1,133 @@
-'use client'
+'use client';
 
-import React from 'react'
+import { useState } from 'react';
+import { Message, continueConversation } from '../actions/ai';
+import { readStreamableValue } from 'ai/rsc';
+import { Button } from './ui/button';
+import { Textarea } from './ui/textarea';
+import { SendIcon } from 'lucide-react';
+import ModelSelector from './model-selector';
 import AiInput from './ai-input';
-import { useChat } from '@ai-sdk/react';
 
-const Chat = () => {
-    const { messages, input, handleInputChange, handleSubmit, isLoading, } = useChat();
+// Allow streaming responses up to 30 seconds
+export const maxDuration = 30;
 
-    if (messages.length === 0) {
-      return (
-        <>
-          <div className='w-full flex flex-col items-center justify-center'>
-            <h1 className='text-6xl font-bold text-white'>Clean AI</h1>
-            <p className='text-neutral-400 text-base font-poppins-semibold'></p>
-            <p className='text-neutral-500 text-base font-poppins mt-4 text-center'>The AI with the cleanest UI</p>
-          </div>
+export default function Chat() {
+  const [conversation, setConversation] = useState<Message[]>([]);
+  const [input, setInput] = useState<string>('');
 
-          <AiInput 
-            handleSubmit={handleSubmit}
-            handleInputChange={handleInputChange}
-            input={input}
-          />
-        </>
-      )
-    }
-
+  if (conversation.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-between w-full py-24 mx-auto h-full">
-        <div className="w-full flex flex-col items-center justify-center max-w-4xl space-y-4">
-          {isLoading && (
-            <div className="p-4 rounded-lg bg-blue-500/10 text-black dark:text-white">
-              <p className="font-medium">Loading...</p>
-            </div>
-          )}
-          {messages.map(message => (
-            <div key={message.id} className={`p-4 w-1/3 rounded-xl ${message.role === 'user' ? 'bg-primary self-end' : 'bg-primary/10 self-start'}`}>
-              <p className="font-medium text-sm mb-2">
+      <>
+        <div className='w-full flex flex-col items-center justify-center mt-32'>
+          <h1 className='text-6xl font-bold text-black dark:text-white'>Chill AI</h1>
+          <p className='text-neutral-400 text-base font-poppins-semibold'></p>
+          <p className='text-neutral-500 text-base font-poppins mt-4 text-center'>The AI with the cleanest UI</p>
+        </div>
+
+        <div className='flex flex-col w-full max-w-4xl border rounded-2xl p-3 focus-visible:ring-[2px] focus-visible:border-ring focus-visible:ring-ring/50'>
+          <div className='flex flex-row gap-2 w-full'>
+            <Textarea
+              placeholder='Enter your prompt here...' 
+              className='font-semibold dark:bg-background text-muted'
+              value={input}
+              onChange={event => {
+                setInput(event.target.value);
+              }}
+            />
+            <Button
+              variant="outline"
+              className='rounded-full'
+              onClick={async () => {
+                const { messages, newMessage } = await continueConversation([
+                  ...conversation,
+                  { role: 'user', content: input },
+                ]);
+
+                let textContent = '';
+
+                for await (const delta of readStreamableValue(newMessage)) {
+                  textContent = `${textContent}${delta}`;
+
+                  setConversation([
+                    ...messages,
+                    { role: 'assistant', content: textContent },
+                  ]);
+                }
+              }}
+            >
+              <SendIcon size={20} />
+            </Button>
+          </div>
+          <ModelSelector />
+        </div>
+      </>
+    )
+  }
+
+  return (
+    <div className='flex flex-col min-h-screen w-full'>
+      <div className='flex-1 w-full overflow-y-auto'>
+        <div className='w-full flex flex-col items-center justify-center max-w-4xl space-y-4 px-4 mx-auto py-6'>
+          {conversation.map((message, index) => (
+            <div 
+              key={index} 
+              className={`p-4 w-full md:w-2/3 rounded-xl text-black dark:text-white font-semibold ${
+                message.role === 'user' 
+                  ? 'bg-primary self-end' 
+                  : 'bg-neutral-100 dark:bg-secondary/60 self-start border border-border'
+              }`}
+            >
+              <p className="font-medium text-sm mb-2 opacity-80">
                 {message.role === 'user' ? 'You' : 'AI'}
               </p>
-              <div className="whitespace-pre-wrap">
-                  {message.parts.map((part, i) => {
-                    switch (part.type) {
-                        case 'text':
-                          return <div className="text-sm text-black dark:text-white rounded-lg" key={`${message.id}-${i}`}>{part.text}</div>;
-                        case 'tool-invocation':
-                          return (
-                              <pre key={`${message.id}-${i}`} className="text-xs bg-muted p-2 rounded my-2 overflow-auto">
-                                {JSON.stringify(part, null, 2)}
-                              </pre>
-                          );
-                        case 'file':
-                        case 'reasoning':
-                        case 'source':
-                        case 'step-start':
-                          return (
-                              <pre key={`${message.id}-${i}`} className="text-xs bg-muted p-2 rounded my-2 overflow-auto">
-                                {JSON.stringify(part, null, 2)}
-                              </pre>
-                          );
-                        default:
-                          return null;
-                    }
-                  })}
+              <div className="whitespace-pre-wrap text-sm rounded-lg">
+                {message.content}
               </div>
             </div>
           ))}
         </div>
-        <div className="w-full max-w-4xl mt-8">
-          <AiInput 
-            handleSubmit={handleSubmit}
-            handleInputChange={handleInputChange}
-            input={input}
-          />
+      </div>
+
+      <div className='sticky bottom-0 w-full bg-background pt-2 pb-4'>
+        <div className='w-full max-w-4xl border rounded-2xl p-3 mx-auto focus-visible:ring-[2px] focus-visible:border-ring focus-visible:ring-ring/50'>
+          <div className='flex flex-row gap-2 w-full'>
+            <Textarea
+              placeholder='Enter your prompt here...' 
+              className='font-semibold dark:bg-background text-muted'
+              value={input}
+              onChange={event => {
+                event.preventDefault();
+                setInput(event.target.value);
+              }}
+            />
+            <Button
+              variant="outline"
+              className='rounded-full'
+              onClick={async () => {
+                const { messages, newMessage } = await continueConversation([
+                  ...conversation,
+                  { role: 'user', content: input },
+                ]);
+
+                let textContent = '';
+
+                for await (const delta of readStreamableValue(newMessage)) {
+                  textContent = `${textContent}${delta}`;
+
+                  setConversation([
+                    ...messages,
+                    { role: 'assistant', content: textContent },
+                  ]);
+                }
+              }}
+            >
+              <SendIcon size={20} />
+            </Button>
+          </div>
+          <ModelSelector />
         </div>
       </div>
-    )
+    </div>
+  );
 }
-
-export default Chat
