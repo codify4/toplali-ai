@@ -4,7 +4,6 @@ import * as React from "react"
 import {
   File,
   FilePlus2,
-  GalleryVerticalEnd,
   Home,
   Info,
   LifeBuoy,
@@ -20,7 +19,6 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
-  SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { Button } from "./ui/button"
 
@@ -71,7 +69,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader className="bg-primary">
         <SidebarMenu>
           <SidebarMenuItem className="flex flex-row items-center justify-between gap-2">
-            <h3 className="font-bold text-lg">Top Lali AI</h3>
+            <h3 className="font-bold text-lg">Chill AI</h3>
             <Button
               variant="ghost"
               size="icon"

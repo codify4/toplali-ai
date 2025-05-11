@@ -54,7 +54,6 @@ export function NavUser({
               className="bg-primary py-3 hover:text-muted cursor-pointer"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg bg-transparent">
                   <CircleUser />
                 </AvatarFallback>

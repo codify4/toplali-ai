@@ -1,14 +1,16 @@
-'use client'
-
 import React from 'react'
 import { Textarea } from './ui/textarea'
 import { SendIcon } from 'lucide-react'
 import { Button } from './ui/button'
 import ModelSelector from './model-selector'
-import { useChatConfig } from '@/hooks/use-chat-config';
 
-function AiInput() {
-    const { input, handleInputChange, handleSubmit } = useChatConfig();
+type AiInputProps = {
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    handleInputChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    input: string;
+}
+
+function AiInput({ handleSubmit, handleInputChange, input }: AiInputProps) {
 
     return (
         <div className='flex flex-col w-full max-w-4xl border rounded-2xl p-3 focus-visible:ring-[2px] focus-visible:border-ring focus-visible:ring-ring/50'>
