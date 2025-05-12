@@ -2,13 +2,10 @@
 
 import {
   BadgeCheck,
-  Bell,
   ChevronRight,
   CircleUser,
-  CreditCard,
   LogOut,
   Moon,
-  Sparkles,
 } from "lucide-react"
 
 import {
@@ -19,11 +16,9 @@ import {
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from "@/components/ui/dialog"
 import {
   SidebarMenu,
@@ -31,8 +26,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { Button } from "./ui/button"
-import DarkModeToggle from "./dark-mode"
+import { Button } from "@/components/ui/button"
+import DarkModeToggle from "@/components/dark-mode"
 
 export function NavUser({
   user,

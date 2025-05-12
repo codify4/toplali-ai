@@ -1,15 +1,18 @@
 'use client'
 
 import React from 'react'
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
-import { Button } from './ui/button'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Button } from '@/components/ui/button'
 import { Check, ChevronRight, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const models = [
-  { value: 'gpt-4', label: 'GPT-4' },
-  { value: 'gpt-3.5-turbo', label: 'GPT-3.5 Turbo' },
-  { value: 'claude-3', label: 'Claude 3' },
+  { value: 'Gemini 2.0 Flash Lite', label: 'Gemini 2.0 Flash Lite' },
+  { value: 'Gemini 2.0 Flash', label: 'Gemini 2.0 Flash' },
+  { value: 'Gemini 2.0 Pro', label: 'Gemini 2.0 Pro' },
+  { value: 'Mistral 7B', label: 'Mistral 7B' },
+  { value: 'Llama 3.1 8B', label: 'Llama 3.1 8B' },
+  { value: 'Llama 3.1 70B', label: 'Llama 3.1 70B' }
 ]
 
 function ModelSelector() {
@@ -28,7 +31,7 @@ function ModelSelector() {
           <ChevronRight />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-2 bg-primary rounded-xl" side="right" align="end">
+      <PopoverContent className="min-w-[200px] p-2 bg-primary rounded-xl" side="right" align="end">
         <div className="space-y-2">
           {models.map((model) => (
             <Button

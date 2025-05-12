@@ -17,6 +17,7 @@ export async function continueConversation(history: Message[]) {
   (async () => {
     const { textStream } = streamText({
       model: google('gemini-2.0-flash-lite'),
+      system: 'You are a helpful assistant that can answer questions concisely and to the point. Do not make the response too long if not necessary.',
       messages: history,
     });
 
