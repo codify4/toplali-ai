@@ -8,6 +8,7 @@ import { Textarea } from './ui/textarea';
 import { SendIcon } from 'lucide-react';
 import ModelSelector from './model-selector';
 import AiInput from './ai-input';
+import AiResponse from './ai-response';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -82,51 +83,24 @@ export default function Chat() {
                 {message.role === 'user' ? 'You' : 'AI'}
               </p>
               <div className="whitespace-pre-wrap text-sm rounded-lg">
-                {message.content}
+                {message.role === 'user' ? (
+                  message.content
+                ) : (
+                  <AiResponse message={message} />
+                )}
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      <div className='sticky bottom-0 w-full bg-background pt-2 pb-4'>
-        <div className='w-full max-w-4xl border rounded-2xl p-3 mx-auto focus-visible:ring-[2px] focus-visible:border-ring focus-visible:ring-ring/50'>
-          <div className='flex flex-row gap-2 w-full'>
-            <Textarea
-              placeholder='Enter your prompt here...' 
-              className='font-semibold dark:bg-background text-muted'
-              value={input}
-              onChange={event => {
-                event.preventDefault();
-                setInput(event.target.value);
-              }}
-            />
-            <Button
-              variant="outline"
-              className='rounded-full'
-              onClick={async () => {
-                const { messages, newMessage } = await continueConversation([
-                  ...conversation,
-                  { role: 'user', content: input },
-                ]);
-
-                let textContent = '';
-
-                for await (const delta of readStreamableValue(newMessage)) {
-                  textContent = `${textContent}${delta}`;
-
-                  setConversation([
-                    ...messages,
-                    { role: 'assistant', content: textContent },
-                  ]);
-                }
-              }}
-            >
-              <SendIcon size={20} />
-            </Button>
-          </div>
-          <ModelSelector />
-        </div>
+      <div className='sticky bottom-0 w-full bg-background pt-2'>
+        <AiInput 
+          input={input} 
+          setInput={setInput} 
+          conversation={conversation} 
+          setConversation={setConversation} 
+        />
       </div>
     </div>
   );
