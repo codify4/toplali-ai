@@ -76,9 +76,9 @@ function AiInput({
         }
     };
 
-    // Handler for pressing Enter to submit (but Shift+Enter for new line)
+    // Handler for pressing Shift+Enter to submit (Enter for new line)
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
+        if (e.key === 'Enter' && e.shiftKey) {
             e.preventDefault();
             handleSubmit();
         }
@@ -89,7 +89,7 @@ function AiInput({
             <div className='flex flex-row gap-2 w-full'>
                 <Textarea
                     ref={textareaRef}
-                    placeholder='Enter your prompt here...' 
+                    placeholder='Enter your prompt here... (Shift + Enter)' 
                     className='font-semibold dark:bg-background text-muted min-h-[60px] max-h-[200px]'
                     value={input}
                     onChange={event => {
