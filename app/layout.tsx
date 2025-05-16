@@ -14,6 +14,20 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "Chill AI",
   description: "The AI with the cleanest UI",
+  icons: {
+    icon: [
+      {
+        media: '(prefers-color-scheme: light)',
+        url: '/icon-light.png',
+        href: '/icon-light.png',
+      },
+      {
+        media: '(prefers-color-scheme: dark)',
+        url: '/icon-dark.png',
+        href: '/icon-dark.png',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

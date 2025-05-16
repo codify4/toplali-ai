@@ -26,7 +26,7 @@ const data = {
   user: {
     name: "shadcn",
     email: "m@example.com",
-    avatar: "/vercel.svg",
+    avatar: "/icon-dark.png",
   },
   navMain: [
     {
