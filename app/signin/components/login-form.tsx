@@ -1,32 +1,33 @@
 "use client"
 
+import Image from "next/image";
 import { AIAnimation } from "./ai-animations"
-import { useTheme } from "next-themes"
 import GoogleButton from "@/app/signin/components/google-button";
-export default function SignInForm() {
-  const { theme } = useTheme();
 
+export default function SignInForm() {
   return (
     <div className="flex h-screen flex-col lg:flex-row w-full">
       {/* Left Section - Sign In */}
       <div className="flex flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-background">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <div className="flex justify-center">
-            <img
-              src={theme === "dark" ? "/icon-dark.png" : "/icon-light.png"}
+            <Image
+              src={"/icon-dark.png"}
               alt="Chill AI Logo"
-              className="h-12 w-auto"
+              width={100}
+              height={100}
+              className="rounded-3xl"
             />
           </div>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
           <div className="space-y-6">
             <div className="text-center space-y-2">
-              <h1 className="text-4xl font-serif font-medium tracking-tight text-black dark:text-white">
-                Your ideas,
+              <h1 className="text-4xl font-medium tracking-tight text-black dark:text-white">
+                Creativity flows
                 <br />
-                amplified
+                effortlessly
               </h1>
               <p className="text-sm text-muted-foreground">
                 The AI with the cleanest UI that helps you create in confidence.
