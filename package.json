@@ -27,6 +27,7 @@
     "@radix-ui/react-tooltip": "^1.2.4",
     "@tailwindcss/typography": "^0.5.16",
     "@types/pg": "^8.15.2",
+    "@vercel/analytics": "^1.5.0",
     "ai": "^4.3.14",
     "better-auth": "^1.2.8",
     "class-variance-authority": "^0.7.1",
