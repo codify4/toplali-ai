@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
-import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
-import Provider from "./provider";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -46,15 +43,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Provider>
-            <AppSidebar />
-            <SidebarInset>
-              <SidebarTrigger className="ml-2 mt-2" />
-              <div className="flex flex-1 flex-col gap-4 p-4 pt-0 bg-background rounded-lg">
-                {children}
-              </div>
-            </SidebarInset>
-          </Provider>
+          {children}
         </ThemeProvider>
       </body>
     </html>

@@ -21,49 +21,45 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
+import { useSession } from "@/lib/auth-client"
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/icon-dark.png",
+const navItems = [
+  {
+    title: "Home",
+    url: "/",
+    icon: Home,
   },
-  navMain: [
-    {
-      title: "Home",
-      url: "/",
-      icon: Home,
-    },
-    {
-      title: "Past Conversations",
-      url: "/past-conversations",
-      icon: File,
-    },
-    {
-      title: "Settings",
-      url: "/settings",
-      icon: Settings2,
-    },
-    {
-      title: "Help",
-      url: "/help",
-      icon: LifeBuoy,
-    },
-    {
-      title: "About",
-      url: "/about",
-      icon: Info,
-    },
-  ],
-  navSecondary: [
-    
-  ],
-  projects: [
-    
-  ],
-}
+  {
+    title: "Past Conversations",
+    url: "/past-conversations",
+    icon: File,
+  },
+  {
+    title: "Settings",
+    url: "/settings",
+    icon: Settings2,
+  },
+  {
+    title: "Help",
+    url: "/help",
+    icon: LifeBuoy,
+  },
+  {
+    title: "About",
+    url: "/about",
+    icon: Info,
+  },
+];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data: session } = useSession();
+  
+  const userData = {
+    name: session?.user?.name || "Guest User",
+    email: session?.user?.email || "guest@example.com",
+    avatar: session?.user?.image || "/icon-dark.png",
+  };
+
   return (
     <Sidebar variant="inset" {...props} className="bg-primary">
       <SidebarHeader className="bg-primary">
@@ -81,14 +77,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent className="bg-primary">
-        <NavMain items={data.navMain} />
+        <NavMain items={navItems} />
       </SidebarContent>
       <SidebarFooter className="bg-primary">
         {/* <Button variant="ghost" className="w-full hover:bg-muted/10 flex items-center justify-start text-start">
           <Trash2 size={16} />
           Clear Chat
         </Button> */}
-        <NavUser user={data.user} />
+        <NavUser user={userData} />
       </SidebarFooter>
     </Sidebar>
   )

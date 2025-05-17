@@ -1,11 +1,8 @@
-"use client"
-
 import {
   BadgeCheck,
   ChevronRight,
   CircleUser,
   LogOut,
-  Moon,
 } from "lucide-react"
 
 import {
@@ -24,10 +21,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
 } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
 import DarkModeToggle from "@/components/dark-mode"
+import { signOut } from "@/lib/auth-client"
 
 export function NavUser({
   user,
@@ -38,7 +35,9 @@ export function NavUser({
     avatar: string
   }
 }) {
-  const { isMobile } = useSidebar()
+  const handleSignOut = async () => {
+    await signOut();
+  }
 
   return (
     <SidebarMenu>
@@ -49,6 +48,7 @@ export function NavUser({
               className="bg-primary py-3 hover:text-muted cursor-pointer"
             >
               <Avatar className="h-8 w-8 rounded-lg">
+                <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg bg-transparent">
                   <CircleUser />
                 </AvatarFallback>
@@ -91,7 +91,10 @@ export function NavUser({
               </div>
             </div>
             <div className="pt-4">
-              <Button className="flex w-full items-center gap-3 rounded-lg px-2 py-5 text-sm text-destructive hover:bg-destructive/10">
+              <Button 
+                onClick={handleSignOut}
+                className="flex w-full items-center gap-3 rounded-lg px-2 py-5 text-sm text-destructive hover:bg-destructive/10"
+              >
                 <LogOut className="h-4 w-4" />
                 <span>Log out</span>
               </Button>
