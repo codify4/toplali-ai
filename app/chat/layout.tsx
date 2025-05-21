@@ -12,7 +12,7 @@ export default function ChatLayout({
             <Provider>
                 <AppSidebar />
                 <SidebarInset>
-                    <SidebarTrigger className="ml-2 mt-2" />
+                    <SidebarTrigger className="ml-2 mt-2 sticky top-4 z-10" />
                     <div className="flex flex-1 flex-col gap-4 p-4 pt-0 bg-background rounded-lg">
                         {children}
                     </div>
