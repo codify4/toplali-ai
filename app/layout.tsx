@@ -25,6 +25,7 @@ export const metadata: Metadata = {
         href: '/white-coffee.svg',
       },
     ],
+    apple: '/apple-icon.png',
   },
 };
 

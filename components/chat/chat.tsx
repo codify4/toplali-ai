@@ -50,14 +50,14 @@ export default function Chat() {
           {conversation.map((message, index) => (
             <div 
               key={index} 
-              className={`p-4 w-full md:w-2/3 rounded-xl text-black dark:text-white font-semibold transition-opacity duration-300 animate-fade-in ${
+              className={`p-4 rounded-xl text-black dark:text-white font-semibold transition-opacity duration-300 animate-fade-in ${
                 message.role === 'user' 
-                  ? 'bg-primary self-end' 
-                  : 'bg-neutral-100 dark:bg-secondary/60 self-start border border-border'
+                  ? 'bg-primary self-end w-full md:w-2/3'
+                  : 'self-start w-full'
               }`}
             >
               <p className="font-medium text-sm mb-2 opacity-80">
-                {message.role === 'user' ? 'You' : 'AI'}
+                {message.role === 'user' ? 'You' : null}
               </p>
               <div className="whitespace-pre-wrap text-sm rounded-lg">
                 {message.role === 'user' ? (
